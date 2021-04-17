@@ -47,6 +47,9 @@ public class UsuarioService {
 
 	public Optional<UsuarioLogin> login(Optional<UsuarioLogin> userParametro) {
 		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
+		System.out.println("verificando....");
+		//verifica se o usuário foi devidamente preenchido 
+		this.verificaUsuarioLogin(userParametro);
 		//busca o usuário no banco de dados pelo nome, como o nome é unico não há conflitos
 		Optional<UsuarioEntidade> usuario= usuarioRepository.findByNome(userParametro.get().getNome());
 		if(usuario.isPresent()) {
@@ -113,5 +116,19 @@ public class UsuarioService {
 		Optional<UsuarioEntidade> user= this.usuarioRepository.findById(id);
 		if(user.isEmpty()) throw new EntidadeNaoEncontradaException("id de usuário não encontrado");
 		else this.usuarioRepository.delete(user.get());
+	}
+	
+	private void verificaUsuarioLogin(Optional<UsuarioLogin> userParametro) {
+		if(userParametro.isPresent()) {
+			if(userParametro.get().getNome() == null|| userParametro.get().getSenha() == null) {
+				throw new CadastroException("Nome e/ou senha não estão preenchidos, por favor verifique!");
+			}
+			if(userParametro.get().getNome().isBlank() || userParametro.get().getSenha().isBlank()) {
+				throw new CadastroException("Nome e/ou senha estão em branco, por favor verifique!");
+			}
+		}else {
+			throw new CadastroException("Usuário não está presente!");
+		}
+		
 	}
 }

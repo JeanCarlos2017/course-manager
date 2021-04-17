@@ -27,10 +27,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var status = HttpStatus.BAD_REQUEST;
 
 		var problema = new Problema();
+		
 		problema.setStatus(status.value());
 		problema.setTitulo(ex.getMessage());
 		problema.setDataHora(OffsetDateTime.now());
-
+		problema.addCampo("mensagem", ex.getMessage());
 		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 	
@@ -42,6 +43,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		problema.setStatus(status.value());
 		problema.setTitulo(ex.getMessage());
 		problema.setDataHora(OffsetDateTime.now());
+		problema.addCampo("mensagem", ex.getMessage());
 		
 		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
