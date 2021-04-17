@@ -22,10 +22,7 @@ public class UsuarioEntidade {
 	
 	@NotBlank(message = "{name.not.blank}")
 	private String nome;
-	
-	@NotBlank(message = "{cnpj.not.blank}")
-	private String cnpj;
-	
+		
 	public long getId_usuario() {
 		return id_usuario;
 	}
@@ -58,12 +55,6 @@ public class UsuarioEntidade {
 		this.nome = nome;
 	}
 
-	public String getCnpj() {
-		return cnpj;
-	}
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
 
 }
