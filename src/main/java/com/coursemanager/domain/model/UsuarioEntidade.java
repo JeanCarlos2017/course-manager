@@ -8,52 +8,27 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity @Table(name="tb_usuario")
+@NoArgsConstructor
 public class UsuarioEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_usuario;
+	@Getter private long id_usuario;
 	
 	@NotBlank(message = "{email.not.blank}")
 	@Email(message = "{email.not.valid}")
-	private String email;
+	@Getter @Setter private String email;
 	
 	@NotBlank(message = "{senha.not.blank}")
-	private String senha;
+	@Getter @Setter private String senha;
 	
 	@NotBlank(message = "{name.not.blank}")
-	private String nome;
+	@Getter @Setter private String nome;
 		
-	public long getId_usuario() {
-		return id_usuario;
-	}
-
-	public void setId_usuario(long id_usuario) {
-		this.id_usuario = id_usuario;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	
 
 
 
