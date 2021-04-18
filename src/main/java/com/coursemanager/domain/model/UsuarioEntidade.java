@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UsuarioEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private long id_usuario;
+	@Getter @Setter private long id_usuario;
 	
 	@NotBlank(message = "{email.not.blank}")
 	@Email(message = "{email.not.valid}")
