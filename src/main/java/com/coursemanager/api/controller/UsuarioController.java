@@ -38,7 +38,7 @@ public class UsuarioController {
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<UsuarioEntidade>> getAll(){
-		return ResponseEntity.ok(usuarioService.getUsuarioRepository().findAll());
+		return ResponseEntity.ok(usuarioService.listaUsuario());
 	}
 	
 	@GetMapping("/buscaPorId/{id}")

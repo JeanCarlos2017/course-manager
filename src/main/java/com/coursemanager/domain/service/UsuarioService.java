@@ -1,6 +1,7 @@
 package com.coursemanager.domain.service;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.codec.binary.Base64;
@@ -65,13 +66,9 @@ public class UsuarioService {
 					+ "por favor verifique se o mesmo está correto");
 		}
 	}
-
-	public void logout(UsuarioEntidade usuario) {
-
-	}
-
-	public UsuarioRepositorio getUsuarioRepository() {
-		return usuarioRepository;
+    
+	public List<UsuarioEntidade> listaUsuario(){
+		return this.usuarioRepository.findAll();
 	}
 
 	public UsuarioEntidade getById(long id) {
