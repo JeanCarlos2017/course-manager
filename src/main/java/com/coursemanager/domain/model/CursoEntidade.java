@@ -43,6 +43,7 @@ public class CursoEntidade {
     @Getter private Date releaseDate= new java.sql.Date(System.currentTimeMillis());
     @NotBlank(message = "{description.not.blank}")
     @Getter @Setter private String description;
+    @NotBlank(message = "{url.not.blank}")
     @Getter @Setter private String link_de_acesso;
     @Getter @Setter private boolean concluido= false;
     
