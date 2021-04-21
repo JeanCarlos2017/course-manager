@@ -24,6 +24,7 @@ public class UsuarioLogin {
 		this.id= usuario.getId_usuario();
 		this.email= usuario.getEmail();
 		this.senha= usuario.getSenha();
+		this.nome= usuario.getNome();
 		this.token= token;
 	}
 	

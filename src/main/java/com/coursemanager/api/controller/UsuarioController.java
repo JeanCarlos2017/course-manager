@@ -1,7 +1,6 @@
 package com.coursemanager.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -53,9 +52,10 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<UsuarioLogin> logar(@Valid @RequestBody Optional<UsuarioLogin> userParam){
-		return usuarioService.login(userParam).map(resp -> ResponseEntity.ok(resp))
-									.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	public ResponseEntity<UsuarioLogin> logar(@Valid @RequestBody UsuarioLogin userParam){
+		UsuarioLogin respostaLogin= this.usuarioService.login(userParam);
+		if (respostaLogin != null) return ResponseEntity.ok(respostaLogin);
+		else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 	
 	@PutMapping("/atualizar/{id}")

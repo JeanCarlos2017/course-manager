@@ -45,26 +45,18 @@ public class UsuarioService {
 		}else return null;
 	}
 
-	public Optional<UsuarioLogin> login(Optional<UsuarioLogin> userParametro) {
+	public UsuarioLogin login(UsuarioLogin userParametro) {
 		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
-		System.out.println("verificando....");
-		//verifica se o usuário foi devidamente preenchido 
-		this.verificaUsuarioLogin(userParametro);
-		//busca o usuário no banco de dados pelo nome, como o nome é unico não há conflitos
-		Optional<UsuarioEntidade> usuario= usuarioRepository.findByNome(userParametro.get().getNome());
+		Optional<UsuarioEntidade> usuario= usuarioRepository.findByNome(userParametro.getNome());
 		if(usuario.isPresent()) {
 			//verifica se a senha do usuário é igual a senha do banco, faz essa verificação considerando a criptografia
-			if(encoder.matches(userParametro.get().getSenha(), usuario.get().getSenha())) {
+			if(encoder.matches(userParametro.getSenha(), usuario.get().getSenha())) {
 				//gero o token do usuário
-				String auth= userParametro.get().getNome() + ":"+ userParametro.get().getSenha();
+				String auth= userParametro.getNome() + ":"+ userParametro.getSenha();
 				byte[] encondeAuth= Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 				String authHeader= "Basic "+new String(encondeAuth);
-				//colocando as informações de usuário no userParametro - que é o usuário para login 
-				userParametro.get().setToken(authHeader);
-				userParametro.get().setEmail(usuario.get().getEmail());
-				userParametro.get().setNome(usuario.get().getNome());
-				userParametro.get().setId(usuario.get().getId_usuario());
-				return userParametro;				
+				
+				return new UsuarioLogin(usuario.get(), authHeader);			
 			}else {
 				throw new EntidadeNaoEncontradaException("Senha incorreta");
 			}
@@ -118,18 +110,6 @@ public class UsuarioService {
 		else this.usuarioRepository.delete(user.get());
 	}
 	
-	private void verificaUsuarioLogin(Optional<UsuarioLogin> userParametro) {
-		if(userParametro.isPresent()) {
-			if(userParametro.get().getNome() == null|| userParametro.get().getSenha() == null) {
-				throw new CadastroException("Nome e/ou senha não estão preenchidos, por favor verifique!");
-			}
-			if(userParametro.get().getNome().isBlank() || userParametro.get().getSenha().isBlank()) {
-				throw new CadastroException("Nome e/ou senha estão em branco, por favor verifique!");
-			}
-		}else {
-			throw new CadastroException("Usuário não está presente!");
-		}
-		
-	}
+
 	
 }
