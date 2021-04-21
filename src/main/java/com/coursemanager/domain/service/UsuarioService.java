@@ -21,27 +21,15 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepositorio usuarioRepository;
 	
-	
-	private boolean validaNome(String nome) {
-		//verifica se já existe um usuário com esse nome
-		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(nome);
-		if(encontrou.isEmpty()) return true;
-		else throw new EntidadeNaoEncontradaException("Nome de usuário já está em uso, por favor escolha outro");
-		
-	}
-
 	public UsuarioEntidade cadastraUsuario(UsuarioEntidade usuario) throws Exception {
-		//verifico se o emial já existe 
-		if(this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+		if(this.usuarioRepository.existsByEmail(usuario.getEmail())) {
 			throw new CadastroException("Email já existente, por favor tente outro!");
 		}
-		// nome sao válidos 
-		if(this.validaNome(usuario.getNome())) {
+		if(!this.usuarioRepository.existsByNome(usuario.getNome())) {
 			//criptografa a senha do usuário 
 			BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
 			String senhaEncoder= encoder.encode(usuario.getSenha());
 			usuario.setSenha(senhaEncoder);
-			//por fim salva o usuário
 			return usuarioRepository.save(usuario);
 		}else return null;
 	}
