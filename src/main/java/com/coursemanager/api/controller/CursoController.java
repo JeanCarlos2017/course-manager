@@ -39,14 +39,6 @@ public class CursoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.cursoService.cadastraCurso(curso));
 	}
 	
-//	@PostMapping("/matricular/curso/{id_curso}")
-//	public ResponseEntity<CursoEntidade> matriculaAluno(@PathVariable long id_usuario, @PathVariable long id_curso){
-//		return ResponseEntity.ok(this.cursoService.matriculaAluno(id_usuario, id_curso));
-//	}
-//	
-//	@GetMapping("/matriculados")
-//	public ResponseEntity<Set<CursoEntidade>> cursosMatriculadosPorAluno(@PathVariable long id_usuario){
-//		return ResponseEntity.ok(this.cursoService.cursosMatriculadosPorAluno(id_usuario));
-//	}
+
 
 }
