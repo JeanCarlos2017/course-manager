@@ -1,6 +1,10 @@
 package com.coursemanager.domain.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor @Getter @Setter
 public class UsuarioLogin {
 	private long id;
 	
@@ -12,50 +16,11 @@ public class UsuarioLogin {
 	
 	private String senha;
 
-	public long getId() {
-		return id;
+	public UsuarioLogin(UsuarioEntidade usuario, String token) {
+		this.id= usuario.getId_usuario();
+		this.email= usuario.getEmail();
+		this.senha= usuario.getSenha();
+		this.token= token;
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
-	
-	
-	
-
-	
 	
 }
