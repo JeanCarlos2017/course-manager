@@ -9,5 +9,5 @@ import com.coursemanager.domain.model.CursoEntidade;
 
 public interface CursoRepositorio extends JpaRepository<CursoEntidade, Long> {
 	List<CursoEntidade> findByNomeIgnoreCase(String nome);
-	Optional<CursoEntidade> existsByNome(String nome); 
+	boolean existsByNome(String nome); 
 }

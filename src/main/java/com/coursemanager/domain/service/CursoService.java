@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coursemanager.domain.exception.CadastroException;
+import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
 import com.coursemanager.domain.model.CursoEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.repository.CursoRepositorio;
@@ -30,12 +31,14 @@ public class CursoService {
 		return this.cursoRepositorio.findAll();
 	}
 	
-	public Optional<CursoEntidade> buscaPorId(long id){
-		return this.cursoRepositorio.findById(id);
+	public CursoEntidade buscaPorId(long id){
+		Optional<CursoEntidade> curso= this.cursoRepositorio.findById(id);
+		if(curso.isEmpty()) throw new EntidadeNaoEncontradaException("Não existe um curso que tenha esse id em nossa base de dados!");
+		else return curso.get();
 	}
 	
 	public CursoEntidade cadastraCurso(CursoEntidade curso) {
-		if(this.cursoRepositorio.existsByNome(curso.getNome()).isPresent()) {
+		if(this.cursoRepositorio.existsByNome(curso.getNome())) {
 			throw new CadastroException
 			("Já existe um curso com esse nome, não foi possível fazer o cadastro! Por favor tente outro");
 		}
