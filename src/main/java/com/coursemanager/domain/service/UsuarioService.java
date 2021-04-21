@@ -65,27 +65,19 @@ public class UsuarioService {
 		else throw new EntidadeNaoEncontradaException("id_usuário de usuário não encontrado");
 	}
 	
-	public UsuarioEntidade alteraUsuario(UsuarioEntidade user, long id_usuario) throws Exception {
+	public UsuarioEntidade alteraUsuario(UsuarioEntidade user) throws Exception {
 		Optional<UsuarioEntidade> encontrou= usuarioRepository.findByNome(user.getNome());
-		//para garantir que será passado o id usuário
-		user.setId_usuario(id_usuario);
 		if(encontrou.isPresent() && encontrou.get().getId_usuario() != user.getId_usuario()) {
-			//está tentando mudar o nome para um usuário que já existe 
 			throw new CadastroException("nome de usuário já existente, por favor tente outro!");
 		}
-		//verifica email
 		encontrou= usuarioRepository.findByEmail(user.getEmail());
 		if(encontrou.isPresent() && encontrou.get().getId_usuario() != user.getId_usuario()) {
-			//está tentando mudar o email para um email que já existe em outro usuário
 			throw new CadastroException("E-mail já existente, por favor tente outro!");
 		}
 		
-		//passou nas verificações então começo o processo para salvar o usuário 
-		//criptografa a senha do usuário 
 		BCryptPasswordEncoder encoder= new BCryptPasswordEncoder();
 		String senhaEncoder= encoder.encode(user.getSenha());
 		user.setSenha(senhaEncoder);
-		//por fim salva o usuário
 		return this.usuarioRepository.save(user);
 	}
 	
@@ -94,7 +86,4 @@ public class UsuarioService {
 		if(user.isEmpty()) throw new EntidadeNaoEncontradaException("id de usuário não encontrado");
 		else this.usuarioRepository.delete(user.get());
 	}
-	
-
-	
 }

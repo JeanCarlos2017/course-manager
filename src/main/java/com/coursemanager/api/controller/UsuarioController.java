@@ -59,9 +59,9 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<UsuarioEntidade> putUsuario(@Valid @RequestBody UsuarioEntidade usuario, 
-			@PathVariable long id) throws Exception{
-		UsuarioEntidade user = usuarioService.alteraUsuario(usuario, id);
+	public ResponseEntity<UsuarioEntidade> putUsuario(@Valid @RequestBody UsuarioEntidade usuario)
+			throws Exception{
+		UsuarioEntidade user = usuarioService.alteraUsuario(usuario);
 		return this.valida(user, HttpStatus.ACCEPTED);
 	}
 	
