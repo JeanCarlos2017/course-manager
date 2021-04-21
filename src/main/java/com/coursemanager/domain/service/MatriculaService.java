@@ -9,23 +9,19 @@ import com.coursemanager.domain.model.CursoEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
 
 @Service
-public class MatrículaService {
+public class MatriculaService {
 	@Autowired
 	private CursoService cursoService;
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	public CursoEntidade matriculaAluno(long id_usuario, long id_curso) {
+	public CursoEntidade matriculaAluno(long id_usuario, long id_curso) throws Exception {
 		UsuarioEntidade usuario= usuarioService.getById(id_usuario);
 		CursoEntidade curso= cursoService.buscaPorId(id_curso);
 		//relação usuário-curso
 		curso.addAluno(usuario);
 		usuario.addCurso(curso);
-		try {
-			this.usuarioService.alteraUsuario(usuario, id_usuario);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		this.usuarioService.alteraUsuario(usuario);
 		return this.cursoService.alteraCurso(curso);
 	}
 	
