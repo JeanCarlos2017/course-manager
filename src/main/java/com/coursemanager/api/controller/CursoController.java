@@ -1,7 +1,6 @@
 package com.coursemanager.api.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,14 +39,14 @@ public class CursoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.cursoService.cadastraCurso(curso));
 	}
 	
-	@PostMapping("/matricular/curso/{id_curso}")
-	public ResponseEntity<CursoEntidade> matriculaAluno(@PathVariable long id_usuario, @PathVariable long id_curso){
-		return ResponseEntity.ok(this.cursoService.matriculaAluno(id_usuario, id_curso));
-	}
-	
-	@GetMapping("/matriculados")
-	public ResponseEntity<Set<CursoEntidade>> cursosMatriculadosPorAluno(@PathVariable long id_usuario){
-		return ResponseEntity.ok(this.cursoService.cursosMatriculadosPorAluno(id_usuario));
-	}
+//	@PostMapping("/matricular/curso/{id_curso}")
+//	public ResponseEntity<CursoEntidade> matriculaAluno(@PathVariable long id_usuario, @PathVariable long id_curso){
+//		return ResponseEntity.ok(this.cursoService.matriculaAluno(id_usuario, id_curso));
+//	}
+//	
+//	@GetMapping("/matriculados")
+//	public ResponseEntity<Set<CursoEntidade>> cursosMatriculadosPorAluno(@PathVariable long id_usuario){
+//		return ResponseEntity.ok(this.cursoService.cursosMatriculadosPorAluno(id_usuario));
+//	}
 
 }

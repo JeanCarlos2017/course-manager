@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.coursemanager.domain.exception.CadastroException;
 import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
-import com.coursemanager.domain.model.CursoEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.model.UsuarioLogin;
 import com.coursemanager.domain.repository.UsuarioRepositorio;
@@ -133,9 +132,4 @@ public class UsuarioService {
 		
 	}
 	
-	public void addMatriculaCurso(long id_usuario, CursoEntidade curso) {
-		UsuarioEntidade usuarioEntidade= this.getById(id_usuario);
-		usuarioEntidade.addCurso(curso);
-		this.usuarioRepository.save(usuarioEntidade);
-	}
 }
