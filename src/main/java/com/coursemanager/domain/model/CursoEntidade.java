@@ -60,5 +60,9 @@ public class CursoEntidade {
     @ManyToMany(mappedBy= "lista_de_cursos", fetch= FetchType.LAZY)
 	@JsonIgnoreProperties("lista_de_cursos")
     @Getter @Setter private Set<UsuarioEntidade> lista_aluno= new HashSet<>();
-
+    
+    
+    public void addAluno(UsuarioEntidade usuario) {
+    	this.lista_aluno.add(usuario);
+    }
 }

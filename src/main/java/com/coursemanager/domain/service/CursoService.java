@@ -2,6 +2,7 @@ package com.coursemanager.domain.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,19 @@ public class CursoService {
 		}
 		
 		return this.cursoRepositorio.save(curso);
+	}
+	
+	public CursoEntidade matriculaAluno(long id_usuario, long id_curso) {
+		UsuarioEntidade usuario= this.buscaUsuarioPorId(id_usuario);
+		CursoEntidade curso= this.buscaPorId(id_curso);
+		//relação usuário-curso
+		curso.addAluno(usuario);
+		this.usuarioService.addMatriculaCurso(id_usuario, curso);
+		return this.cursoRepositorio.save(curso);
+	}
+	
+	public Set<CursoEntidade> cursosMatriculadosPorAluno(long id_usuario){
+		UsuarioEntidade usuario= this.buscaUsuarioPorId(id_usuario);
+		return usuario.getLista_de_cursos();
 	}
 }

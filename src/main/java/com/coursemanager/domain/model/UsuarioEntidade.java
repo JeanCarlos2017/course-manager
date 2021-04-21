@@ -54,5 +54,9 @@ public class UsuarioEntidade {
 	  joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id"))
 	@JsonIgnoreProperties("lista_aluno")
 	@Getter @Setter private Set<CursoEntidade> lista_de_cursos = new HashSet<>();
-
+	
+	
+	public void addCurso(CursoEntidade curso) {
+		this.lista_de_cursos.add(curso);
+	}
 }
