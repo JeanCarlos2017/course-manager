@@ -1,0 +1,105 @@
+package com.coursemanager.domain.respository;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.validation.ConstraintViolationException;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.coursemanager.domain.model.UsuarioEntidade;
+import com.coursemanager.domain.repository.UsuarioRepositorio;
+import com.coursemanager.util.UsuarioCreator;
+import com.coursemanager.util.UsuarioTestComum;
+
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+@DisplayName("Testes para o repositório de usuário")
+class UsuarioRepositoryCadastroTest {
+	
+	@Autowired private UsuarioRepositorio usuarioRepositorio;
+
+	@Test
+	void cadastraUsuario_Sucesso() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		UsuarioEntidade usuarioOutput= this.usuarioRepositorio.save(usuario);
+		UsuarioTestComum.testeSimplesUsuario(usuario, usuarioOutput);
+	}
+	
+	@Test @DisplayName("cadastro de usuario com nome nulo")
+	void cadastraUsuario_InSucesso_SemNome() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setNome(null);
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("Nome não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("cadastro de usuario com nome em branco")
+	void cadastraUsuario_InSucesso_NomeEmBranco() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setNome("     ");
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("Nome não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("cadastro de usuario com e-mail nulo")
+	void cadastraUsuario_InSucesso_SemEmail() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setEmail(null);
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("E-mail não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("cadastro de usuario com e-mail em branco")
+	void cadastraUsuario_InSucesso_EmailEmBranco() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setEmail("     ");
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("E-mail não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("cadastro de usuario com senha nula")
+	void cadastraUsuario_InSucesso_SemSenha() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setSenha(null);
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("Senha não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("cadastro de usuario com senha em branco")
+	void cadastraUsuario_InSucesso_SenhaEmBranco() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		usuario.setSenha("     ");
+		
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains("Senha não deve estar em branco"));
+	}
+}
