@@ -17,13 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity @Table(name="tb_curso")
-@NoArgsConstructor
+@NoArgsConstructor @ToString
 public class CursoEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter private long id;

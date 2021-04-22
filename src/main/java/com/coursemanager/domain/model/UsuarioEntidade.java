@@ -21,9 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity @Table(name = "tb_usuario")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @ToString
 public class UsuarioEntidade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

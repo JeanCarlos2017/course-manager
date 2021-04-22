@@ -5,8 +5,9 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @ToString
 public class UsuarioLogin {
 	private long id;
 	
