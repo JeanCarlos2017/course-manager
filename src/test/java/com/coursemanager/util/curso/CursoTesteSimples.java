@@ -1,8 +1,14 @@
 package com.coursemanager.util.curso;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.validation.ConstraintViolationException;
+
 import org.assertj.core.api.Assertions;
 
 import com.coursemanager.domain.model.CursoEntidade;
+import com.coursemanager.domain.repository.CursoRepositorio;
 
 public class CursoTesteSimples {
 	public static void testeSimplesCurso(CursoEntidade cursoInput, CursoEntidade cursoOutput) {
@@ -18,7 +24,11 @@ public class CursoTesteSimples {
 	}
 	
 	
-	public void testeExcecaoCursoAoCadastrar(String messagem) {
-		
+	public static void testeExcecaoCursoAoCadastrar(CursoEntidade cursoInput, String mensagem, CursoRepositorio cursoRepositorio) {
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> cursoRepositorio.save(cursoInput)
+		);
+		assertTrue(exception.getMessage().contains(mensagem));
 	}
 }
