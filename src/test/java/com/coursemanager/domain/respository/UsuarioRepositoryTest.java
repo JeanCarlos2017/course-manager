@@ -3,8 +3,11 @@ package com.coursemanager.domain.respository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 import javax.validation.ConstraintViolationException;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +23,7 @@ import com.coursemanager.util.UsuarioTestComum;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @DisplayName("Testes para o repositório de usuário")
-class UsuarioRepositoryCadastroTest {
+class UsuarioRepositoryTest {
 	
 	@Autowired private UsuarioRepositorio usuarioRepositorio;
 
@@ -101,5 +104,27 @@ class UsuarioRepositoryCadastroTest {
 				()-> usuarioRepositorio.save(usuario)
 		);
 		assertTrue(exception.getMessage().contains("Senha não deve estar em branco"));
+	}
+	
+	@Test @DisplayName("Alteração de usuário com sucesso")
+	void alteraUsuarioSucesso() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		UsuarioEntidade usuarioSaved= this.usuarioRepositorio.save(usuario);
+		usuarioSaved.setNome("novo nome");
+		usuarioSaved.setEmail("novoemail@email.com");
+		usuarioSaved.setSenha("nova senha");
+		
+		UsuarioEntidade usuarioUpdate= this.usuarioRepositorio.save(usuarioSaved);
+		Assertions.assertThat(usuarioUpdate.getId_usuario()).isEqualTo(usuarioSaved.getId_usuario());
+		UsuarioTestComum.testeSimplesUsuario(usuarioSaved, usuarioUpdate);
+	}
+	
+	@Test @DisplayName("Deletar usuário com sucesso")
+	void deleteUsuario_Sucesso() {
+		UsuarioEntidade usuario= UsuarioCreator.criaUsuarioInput();
+		UsuarioEntidade usuarioSaved= this.usuarioRepositorio.save(usuario);
+		this.usuarioRepositorio.deleteById(usuarioSaved.getId_usuario());
+		Optional<UsuarioEntidade> buscaUsuarioDeletado= this.usuarioRepositorio.findById(usuarioSaved.getId_usuario());
+		Assertions.assertThat(buscaUsuarioDeletado.isEmpty()).isTrue();
 	}
 }
