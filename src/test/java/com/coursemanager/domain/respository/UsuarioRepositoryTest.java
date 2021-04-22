@@ -17,8 +17,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.repository.UsuarioRepositorio;
-import com.coursemanager.util.UsuarioCreator;
-import com.coursemanager.util.UsuarioTestComum;
+import com.coursemanager.util.usuario.UsuarioCreator;
+import com.coursemanager.util.usuario.UsuarioTestComum;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

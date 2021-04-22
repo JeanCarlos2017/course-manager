@@ -1,4 +1,4 @@
-package com.coursemanager.util;
+package com.coursemanager.util.usuario;
 
 import com.coursemanager.domain.model.UsuarioEntidade;
 
