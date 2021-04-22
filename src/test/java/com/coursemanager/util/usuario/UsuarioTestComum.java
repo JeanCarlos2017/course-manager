@@ -1,8 +1,14 @@
 package com.coursemanager.util.usuario;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.validation.ConstraintViolationException;
+
 import org.assertj.core.api.Assertions;
 
 import com.coursemanager.domain.model.UsuarioEntidade;
+import com.coursemanager.domain.repository.UsuarioRepositorio;
 
 public class UsuarioTestComum {
 
@@ -14,5 +20,11 @@ public class UsuarioTestComum {
 		Assertions.assertThat(userOutput.getSenha()).isEqualTo(userInput.getSenha());
 	}
 	
-
+	public static void testeExcecaoCadastroUsuario(String mensagem, UsuarioRepositorio usuarioRepositorio, UsuarioEntidade usuario) {
+		Exception exception= assertThrows(
+				ConstraintViolationException.class, 
+				()-> usuarioRepositorio.save(usuario)
+		);
+		assertTrue(exception.getMessage().contains(mensagem));
+	}
 }
