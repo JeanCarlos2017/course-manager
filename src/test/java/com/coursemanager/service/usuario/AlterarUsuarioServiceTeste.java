@@ -46,23 +46,24 @@ public class AlterarUsuarioServiceTeste {
 		assertTrue(exception.getMessage().contains(mensagem));
 	}
 	
+	void setMocksUpdateUsuario(Optional<UsuarioEntidade>findByNome, Optional<UsuarioEntidade> findByEmail) {
+		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
+		  .thenReturn(findByNome);
+		
+		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
+		  .thenReturn(findByEmail);
+	}
+	
 	@Test @DisplayName("teste de sucesso, nome e email novo")
 	void testeAlteraUsuario_Sucesso() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
-		
+		setMocksUpdateUsuario(Optional.empty(), Optional.empty());
 		UsuarioEntidade usuarioOutput= this.usuarioService.alteraUsuario(this.usuarioInput);
 		UsuarioTestComum.testeCadastroUsuarioService(usuarioInput, usuarioOutput);		
 	}
 	
 	@Test @DisplayName("alterando o usuário e mantendo o e-mail")
 	void testeAlteraUsuario_Sucesso_MesmoEmail() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
+		this.setMocksUpdateUsuario(Optional.empty(), Optional.of(UsuarioCreator.criaUsuarioOutputService()));
 		
 		UsuarioEntidade usuarioOutput= this.usuarioService.alteraUsuario(this.usuarioInput);
 		UsuarioTestComum.testeCadastroUsuarioService(usuarioInput, usuarioOutput);		
@@ -70,49 +71,32 @@ public class AlterarUsuarioServiceTeste {
 	
 	@Test @DisplayName("alterando o usuário e mantendo o nome")
 	void testeAlteraUsuario_Sucesso_MesmoNome() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
-		
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
+	    this.setMocksUpdateUsuario(Optional.of(UsuarioCreator.criaUsuarioOutputService()), Optional.empty());
 		
 		UsuarioEntidade usuarioOutput= this.usuarioService.alteraUsuario(this.usuarioInput);
 		UsuarioTestComum.testeCadastroUsuarioService(usuarioInput, usuarioOutput);		
 	}
 	
 	@Test @DisplayName("alterando o usuário e mantendo o nome e email")
-	void testeAlteraUsuario_Sucesso_MesmoNomeEEmail() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
-		
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
+	void testeAlteraUsuario_InSucesso_MesmoNomeEEmail() throws Exception {
+		this.setMocksUpdateUsuario(Optional.of(UsuarioCreator.criaUsuarioOutputService()), 
+				Optional.of(UsuarioCreator.criaUsuarioOutputService()));
 				
 		UsuarioEntidade usuarioOutput= this.usuarioService.alteraUsuario(this.usuarioInput);
 		UsuarioTestComum.testeCadastroUsuarioService(usuarioInput, usuarioOutput);		
 	}
 	
-	
-	
 	@Test @DisplayName("alterando o nome usuário para um existente no banco")
-	void testeAlteraUsuario_Sucesso_NomeExistente() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
-		
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
-		
+	void testeAlteraUsuario_InSucesso_NomeExistente() throws Exception {
+		this.setMocksUpdateUsuario(Optional.of(UsuarioCreator.criaUsuarioOutputService()), Optional.empty());
 		this.testeExcecaoUpdateUsuarioService("nome de usuário já existente, por favor tente outro!", 11L);	
 	}
 	
 	@Test @DisplayName("alterando o e-mail do usuário para um existente no banco")
-	void testeAlteraUsuario_Sucesso_EmailExistente() throws Exception {
-		BDDMockito.when(usuarioRepositorio.findByNome(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.empty());
-		
-		BDDMockito.when(usuarioRepositorio.findByEmail(ArgumentMatchers.anyString()))
-		  .thenReturn(Optional.of(UsuarioCreator.criaUsuarioOutputService()));
-		
+	void testeAlteraUsuario_InSucesso_EmailExistente() throws Exception {
+		this.setMocksUpdateUsuario(Optional.empty(), Optional.of(UsuarioCreator.criaUsuarioOutputService()));
 		this.testeExcecaoUpdateUsuarioService("E-mail já existente, por favor tente outro!", 11L);	
 	}
+
+
 }
