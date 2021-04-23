@@ -3,6 +3,7 @@ package com.coursemanager.util.usuario;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.coursemanager.domain.model.UsuarioEntidade;
+import com.coursemanager.domain.model.UsuarioLogin;
 
 public class UsuarioCreator {
    public static UsuarioEntidade criaUsuarioInput() {
@@ -39,5 +40,14 @@ public class UsuarioCreator {
 	public static String criptografaSenhaUsuario(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
+	}
+	
+	public static UsuarioLogin criaUsuarioLoginInput() {
+		UsuarioLogin usuarioEntidade = new UsuarioLogin();
+		usuarioEntidade.setNome("nome teste");
+		usuarioEntidade.setSenha("senha teste");
+		usuarioEntidade.setEmail("teste@teste.com");
+
+		return usuarioEntidade;
 	}
 }
