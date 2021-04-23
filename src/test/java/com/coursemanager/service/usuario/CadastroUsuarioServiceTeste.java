@@ -17,6 +17,7 @@ import com.coursemanager.util.usuario.UsuarioCreator;
 import com.coursemanager.util.usuario.UsuarioTestComum;
 
 @ExtendWith(SpringExtension.class)
+@DisplayName("teste de cadastro de usuário na camada service")
 public class CadastroUsuarioServiceTeste {
 	@InjectMocks
 	private UsuarioService usuarioService;
@@ -30,9 +31,19 @@ public class CadastroUsuarioServiceTeste {
 		BDDMockito.when(usuarioRepositorio.save(ArgumentMatchers.any()))
 			.thenReturn(UsuarioCreator.criaUsuarioOutputService());
 	}
-	@Test @DisplayName("teste de sucesso para cadastro usuário")
+	@Test @DisplayName("teste de sucesso")
 	void testeCadastroUsuario_Sucesso() throws Exception {
 		UsuarioEntidade usuarioOutput= this.usuarioService.cadastraUsuario(usuarioInput);
 		UsuarioTestComum.testeCadastroUsuarioService(usuarioInput, usuarioOutput);
 	}
+	
+	@Test @DisplayName("email já existente")
+	void testeCadastroUsuario_InSucesso_EmailExistente() throws Exception {
+		BDDMockito.when(usuarioRepositorio.existsByEmail(ArgumentMatchers.anyString()))
+		.thenReturn(true);
+		
+		UsuarioTestComum.testeExcecaoCadastroUsuarioService("Email já existente, por favor tente outro!",
+				this.usuarioService, UsuarioCreator.criaUsuarioInput());
+	}
+	
 }

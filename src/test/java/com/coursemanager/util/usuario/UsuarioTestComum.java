@@ -7,8 +7,10 @@ import javax.validation.ConstraintViolationException;
 
 import org.assertj.core.api.Assertions;
 
+import com.coursemanager.domain.exception.CadastroException;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.repository.UsuarioRepositorio;
+import com.coursemanager.domain.service.UsuarioService;
 
 public class UsuarioTestComum {
 
@@ -35,5 +37,13 @@ public class UsuarioTestComum {
 		Assertions.assertThat(userOutput.getEmail()).isEqualTo(userInput.getEmail());
 		//senhas diferentes por conta da criptografia
 		Assertions.assertThat(userOutput.getSenha()).isNotEqualTo(userInput.getSenha());
+	}
+	
+	public static void testeExcecaoCadastroUsuarioService(String mensagem, UsuarioService usuarioService, UsuarioEntidade usuario) {
+		Exception exception= assertThrows(
+				CadastroException.class, 
+				()-> usuarioService.cadastraUsuario(usuario)
+		);
+		assertTrue(exception.getMessage().contains(mensagem));
 	}
 }
