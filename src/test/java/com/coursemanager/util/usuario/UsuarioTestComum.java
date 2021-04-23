@@ -39,11 +39,14 @@ public class UsuarioTestComum {
 		Assertions.assertThat(userOutput.getSenha()).isNotEqualTo(userInput.getSenha());
 	}
 	
-	public static void testeExcecaoCadastroUsuarioService(String mensagem, UsuarioService usuarioService, UsuarioEntidade usuario) {
+	public static void testeExcecaoCadastroUsuarioService(String mensagem, UsuarioService usuarioService, 
+			UsuarioEntidade usuario) {
 		Exception exception= assertThrows(
 				CadastroException.class, 
 				()-> usuarioService.cadastraUsuario(usuario)
 		);
 		assertTrue(exception.getMessage().contains(mensagem));
 	}
+	
+	
 }
