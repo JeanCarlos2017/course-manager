@@ -46,4 +46,12 @@ public class CadastroUsuarioServiceTeste {
 				this.usuarioService, UsuarioCreator.criaUsuarioInput());
 	}
 	
+	@Test @DisplayName("Nome já existente")
+	void testeCadastroUsuario_InSucesso_NomeExistente() throws Exception {
+		BDDMockito.when(usuarioRepositorio.existsByNome(ArgumentMatchers.anyString()))
+		.thenReturn(true);
+		
+		UsuarioTestComum.testeExcecaoCadastroUsuarioService("Nome já existente, por favor tente outro!",
+				this.usuarioService, UsuarioCreator.criaUsuarioInput());
+	}
 }

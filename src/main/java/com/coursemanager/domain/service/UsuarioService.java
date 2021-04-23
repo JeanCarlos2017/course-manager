@@ -31,7 +31,7 @@ public class UsuarioService {
 			String senhaEncoder= encoder.encode(usuario.getSenha());
 			usuario.setSenha(senhaEncoder);
 			return usuarioRepository.save(usuario);
-		}else return null;
+		}else throw new CadastroException("Nome já existente, por favor tente outro!");
 	}
 
 	public UsuarioLogin login(UsuarioLogin userParametro) {
