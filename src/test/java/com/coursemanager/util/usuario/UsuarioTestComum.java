@@ -27,4 +27,13 @@ public class UsuarioTestComum {
 		);
 		assertTrue(exception.getMessage().contains(mensagem));
 	}
+	
+	public static void testeCadastroUsuarioService(UsuarioEntidade userInput, UsuarioEntidade userOutput) {
+		Assertions.assertThat(userOutput).isNotNull();
+		Assertions.assertThat(userOutput.getId_usuario()).isNotNull();
+		Assertions.assertThat(userOutput.getNome()).isEqualTo(userInput.getNome());
+		Assertions.assertThat(userOutput.getEmail()).isEqualTo(userInput.getEmail());
+		//senhas diferentes por conta da criptografia
+		Assertions.assertThat(userOutput.getSenha()).isNotEqualTo(userInput.getSenha());
+	}
 }
