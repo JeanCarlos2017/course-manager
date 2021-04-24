@@ -5,6 +5,7 @@ import com.coursemanager.domain.model.CursoEntidade;
 public class CursoCreator {
 	public static CursoEntidade cursoInput() {
 		CursoEntidade curso= new CursoEntidade();
+		curso.setId(1L);
 		curso.setCode("code");
 		curso.setDescription("descricao");
 		curso.setDuration(8.5f);;

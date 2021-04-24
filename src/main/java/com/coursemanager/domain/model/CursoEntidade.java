@@ -27,7 +27,7 @@ import java.util.Set;
 @NoArgsConstructor @ToString
 public class CursoEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private long id;
+	@Getter @Setter private long id;
 	
 	@NotBlank(message = "{name.not.blank}")
 	@Getter @Setter private String nome;
