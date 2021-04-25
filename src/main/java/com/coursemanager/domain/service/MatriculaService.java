@@ -1,37 +1,60 @@
 package com.coursemanager.domain.service;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
+import com.coursemanager.domain.exception.CadastroException;
+import com.coursemanager.domain.model.ChaveMatriculaEntidade;
 import com.coursemanager.domain.model.CursoEntidade;
+import com.coursemanager.domain.model.MatriculaEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
+import com.coursemanager.domain.repository.MatriculaRepositorio;
 
 @Service
 public class MatriculaService {
-	@Autowired
-	private CursoService cursoService;
-	@Autowired
-	private UsuarioService usuarioService;
+	@Autowired	private MatriculaRepositorio matriculaRepositorio;
+	@Autowired private UsuarioService usuarioService;
+	@Autowired private CursoService cursoService;
 	
-	public CursoEntidade matriculaAluno(long id_usuario, long id_curso) throws Exception {
-		UsuarioEntidade usuario = usuarioService.getById(id_usuario);
-		CursoEntidade curso = cursoService.buscaPorId(id_curso);
-		if (curso != null && usuario != null) {
-			// relação usuário-curso
-			curso.addAluno(usuario);
-			usuario.addCurso(curso);
-			this.usuarioService.alteraUsuario(usuario);
-			return this.cursoService.alteraCurso(curso);
-		}else {
-			throw new EntidadeNaoEncontradaException("Curso ou Usuário não existente, por favor verifique isso!");
-		}
+	
+	private CursoEntidade curso;
+	private UsuarioEntidade aluno;
+	private ChaveMatriculaEntidade chaveMatriculaEntidade;
+	private MatriculaEntidade matriculaEntidade;
+	
+	public MatriculaEntidade matriculaAluno(long idAluno, long idCurso) {
+		this.buscaAluno(idAluno);
+		this.buscaCurso(idCurso);
+		this.buildChaveMatricula();
+		this.buildMatricula();
+		return this.saveMatricula();
+	}
+
+	public List<MatriculaEntidade> listaMatricula() {
+		return this.matriculaRepositorio.findAll();
 	}
 	
-	public Set<CursoEntidade> cursosMatriculadosPorAluno(long id_usuario){
-		UsuarioEntidade usuario= this.usuarioService.getById(id_usuario);
-		return usuario.getLista_de_cursos();
+	private void buscaAluno( long idAluno) {
+		this.aluno= this.usuarioService.getById(idAluno);
+		if(this.aluno == null) throw new CadastroException("O id de aluno está incorreto, por favor verifique");
+	}
+	
+	private void buscaCurso(long idCurso) {
+		this.curso= this.cursoService.buscaPorId(idCurso);
+		if(this.curso == null) throw new CadastroException("O id de curso está incorreto, por favor verifique");
+	}
+	
+	private void buildChaveMatricula() {
+		this.chaveMatriculaEntidade= new ChaveMatriculaEntidade(this.aluno.getId_usuario(), this.curso.getId());
+	}
+	
+	private void buildMatricula() {
+		this.matriculaEntidade= new MatriculaEntidade(this.chaveMatriculaEntidade, this.aluno, this.curso, false);
+	}
+	
+	private MatriculaEntidade saveMatricula() {
+		return this.matriculaRepositorio.save(this.matriculaEntidade);
 	}
 }
