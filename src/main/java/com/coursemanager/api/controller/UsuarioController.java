@@ -1,5 +1,6 @@
 package com.coursemanager.api.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coursemanager.domain.dto.CursoDTO;
+import com.coursemanager.domain.dto.UtilsEntidadeToDTO;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.model.UsuarioLogin;
 import com.coursemanager.domain.service.UsuarioService;
@@ -69,6 +72,12 @@ public class UsuarioController {
 	public ResponseEntity<Void> deleteById(@PathVariable long id){
 		this.usuarioService.deleteUsuario(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	@GetMapping("{id_usuario}/cursos/matriculados")
+	public ResponseEntity<Collection<CursoDTO>> getCusosAluno(@PathVariable long id_usuario){
+		return ResponseEntity.ok(UtilsEntidadeToDTO.getCursoDTODeMatriculaEntidade
+				(this.usuarioService.getCursoAluno(id_usuario)));
 	}
 	
 	private ResponseEntity<UsuarioEntidade> valida(UsuarioEntidade user, HttpStatus status){

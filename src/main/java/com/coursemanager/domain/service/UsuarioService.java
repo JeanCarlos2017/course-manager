@@ -3,6 +3,7 @@ package com.coursemanager.domain.service;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.coursemanager.domain.exception.CadastroException;
 import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
+import com.coursemanager.domain.model.MatriculaEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.model.UsuarioLogin;
 import com.coursemanager.domain.repository.UsuarioRepositorio;
@@ -85,5 +87,10 @@ public class UsuarioService {
 		Optional<UsuarioEntidade> user= this.usuarioRepository.findById(id);
 		if(user.isEmpty()) throw new EntidadeNaoEncontradaException("id de usuário não encontrado");
 		else this.usuarioRepository.delete(user.get());
+	}
+
+	public Set<MatriculaEntidade> getCursoAluno(long id_usuario) {
+		UsuarioEntidade user= this.getById(id_usuario);
+		return user.getCursos();
 	}
 }
