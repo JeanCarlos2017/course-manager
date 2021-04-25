@@ -87,6 +87,11 @@ public class UsuarioController {
 				(this.usuarioService.getCursoAlunoFinalizado(id_usuario)));
 	}
 	
+	@GetMapping("{id_usuario}/cursos/pendente")
+	public ResponseEntity<Collection<CursoDTO>> getCursosPendente(@PathVariable long id_usuario){
+		return ResponseEntity.ok(UtilsEntidadeToDTO.getCursoDTODeMatriculaEntidade
+				(this.usuarioService.getCursoAlunoPendente(id_usuario)));
+	}
 	private ResponseEntity<UsuarioDTO> valida(UsuarioEntidade user, HttpStatus status){
 		if (user == null) return ResponseEntity.badRequest().build();
 		else return ResponseEntity.status(status).body(new UsuarioDTO(user));

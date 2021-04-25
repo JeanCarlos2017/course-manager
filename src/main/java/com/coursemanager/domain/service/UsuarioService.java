@@ -1,6 +1,7 @@
 package com.coursemanager.domain.service;
 
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -100,6 +101,14 @@ public class UsuarioService {
 		return user.getCursos()
 				.stream()
 				.filter( matricula -> matricula.isFinalizado())
+				.collect(Collectors.toList());
+	}
+
+	public Collection<MatriculaEntidade> getCursoAlunoPendente(long id_usuario) {
+		UsuarioEntidade user= this.getById(id_usuario);
+		return user.getCursos()
+				.stream()
+				.filter( matricula -> !matricula.isFinalizado())
 				.collect(Collectors.toList());
 	}
 }
