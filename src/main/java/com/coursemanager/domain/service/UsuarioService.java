@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,13 @@ public class UsuarioService {
 	public Set<MatriculaEntidade> getCursoAluno(long id_usuario) {
 		UsuarioEntidade user= this.getById(id_usuario);
 		return user.getCursos();
+	}
+	
+	public List<MatriculaEntidade> getCursoAlunoFinalizado(long id_usuario) {
+		UsuarioEntidade user= this.getById(id_usuario);
+		return user.getCursos()
+				.stream()
+				.filter( matricula -> matricula.isFinalizado())
+				.collect(Collectors.toList());
 	}
 }
