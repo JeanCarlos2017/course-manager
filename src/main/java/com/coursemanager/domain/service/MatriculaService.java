@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coursemanager.domain.exception.CadastroException;
+import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
 import com.coursemanager.domain.model.ChaveMatriculaEntidade;
 import com.coursemanager.domain.model.CursoEntidade;
 import com.coursemanager.domain.model.MatriculaEntidade;
@@ -57,4 +58,25 @@ public class MatriculaService {
 	private MatriculaEntidade saveMatricula() {
 		return this.matriculaRepositorio.save(this.matriculaEntidade);
 	}
+
+	public void concluirCurso(long idAluno, long idCurso) {
+		this.buscaAluno(idAluno);
+		this.buscaCurso(idCurso);
+		this.buildChaveMatricula();
+		this.existChaveMatricula();
+		this.buildMatricula();
+		this.finalizaMAtricula();
+		this.saveMatricula();
+	}
+	
+	private void finalizaMAtricula() {
+		this.matriculaEntidade.setFinalizado(true);
+	}
+	
+	private boolean existChaveMatricula() {
+		if(this.matriculaRepositorio.existsById(this.chaveMatriculaEntidade)) return true;
+		else throw new EntidadeNaoEncontradaException("Não existe uma mátricula para esse curso e aluno, por favor verifique e tente novamente!");
+	}
+	
+	
 }

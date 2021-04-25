@@ -3,6 +3,7 @@ package com.coursemanager.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,11 @@ public class MatriculaController {
 		return ResponseEntity.ok( UtilsEntidadeToDTO.matriculaEntidadeToDTO( matriculaService.listaMatricula()) );
 	}
 	
+	@PostMapping("/concluir/{id_curso}")
+	public ResponseEntity<Void> finalizaCurso(@PathVariable long id_aluno	, 
+			@PathVariable long id_curso){
+		this.matriculaService.concluirCurso(id_aluno, id_curso);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 	
 }
