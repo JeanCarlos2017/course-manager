@@ -1,5 +1,6 @@
 package com.coursemanager.domain.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.coursemanager.domain.exception.CadastroException;
 import com.coursemanager.domain.exception.EntidadeNaoEncontradaException;
 import com.coursemanager.domain.model.CursoEntidade;
+import com.coursemanager.domain.model.MatriculaEntidade;
 import com.coursemanager.domain.repository.CursoRepositorio;
 
 @Service
@@ -46,6 +48,11 @@ public class CursoService {
 			}
 		}
 		return this.cursoRepositorio.save(curso);
+	}
+
+	public Collection<MatriculaEntidade> getMatricula(long id_curso) {
+		CursoEntidade curso= this.buscaPorId(id_curso);
+		return curso.getAlunos();
 	}
 	
 }

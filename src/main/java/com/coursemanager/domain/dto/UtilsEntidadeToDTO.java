@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.coursemanager.domain.model.CursoEntidade;
 import com.coursemanager.domain.model.MatriculaEntidade;
 import com.coursemanager.domain.model.UsuarioEntidade;
 
@@ -17,8 +18,8 @@ public class UtilsEntidadeToDTO {
 		return listaMatriculaDTO;
 	}
 	
-	public static List<CursoDTO> getCursoDTODeMatriculaEntidade(Collection<MatriculaEntidade> cursoEntidadeList){
-		return cursoEntidadeList.stream()
+	public static List<CursoDTO> getCursoDTODeMatriculaEntidade(Collection<MatriculaEntidade> matriculaEntidadeList){
+		return matriculaEntidadeList.stream()
 				.map( (curso) -> new CursoDTO(curso.getCurso()))
 				.collect(Collectors.toList());
 	}
@@ -26,6 +27,18 @@ public class UtilsEntidadeToDTO {
 	public static List<UsuarioDTO> usuarioEntidadeToDTO(Collection<UsuarioEntidade> usuarioEntidadeList){
 		return usuarioEntidadeList.stream()
 				.map( (usuario) -> new UsuarioDTO(usuario))
+				.collect(Collectors.toList());
+	}
+	
+	public static List<CursoDTO> cursoEntidadeToDTO(Collection<CursoEntidade> cursoEntidadeList){
+		return cursoEntidadeList.stream()
+				.map( (curso) -> new CursoDTO(curso))
+				.collect(Collectors.toList());
+	}
+	
+	public static List<UsuarioDTO> getUsuarioDTODeMatriculaEntidade(Collection<MatriculaEntidade> matriculaEntidadeList){
+		return matriculaEntidadeList.stream()
+				.map( (matricula) -> new UsuarioDTO(matricula.getAluno()))
 				.collect(Collectors.toList());
 	}
 }
