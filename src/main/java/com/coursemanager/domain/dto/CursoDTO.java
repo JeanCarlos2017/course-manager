@@ -29,7 +29,6 @@ public class CursoDTO {
     
 	private String link_de_acesso;
     
-	private boolean concluido;
 	
 	public CursoDTO( CursoEntidade curso) {
 		this.id= curso.getId();
@@ -42,6 +41,5 @@ public class CursoDTO {
 		this.releaseDate= curso.getReleaseDate();
 		this.description= curso.getDescription();
 		this.link_de_acesso= curso.getLink_de_acesso();
-		this.concluido= curso.isConcluido();
 	}
 }

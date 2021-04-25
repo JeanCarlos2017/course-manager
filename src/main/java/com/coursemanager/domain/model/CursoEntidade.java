@@ -53,9 +53,7 @@ public class CursoEntidade {
     
 	@NotBlank(message = "{url.not.blank}")
     @Getter @Setter private String link_de_acesso;
-    
-	@Getter @Setter private boolean concluido= false;
-    
+        
 	@OneToMany(mappedBy = "curso")
 	@JsonIgnoreProperties("cursos")
 	@Getter @Setter private Set<MatriculaEntidade> alunos;
