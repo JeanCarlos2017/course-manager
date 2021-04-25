@@ -1,11 +1,13 @@
 package com.coursemanager.domain.model;
 
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,10 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity @Table(name="tb_curso")
 @NoArgsConstructor @ToString
@@ -58,12 +56,7 @@ public class CursoEntidade {
     
 	@Getter @Setter private boolean concluido= false;
     
-    @ManyToMany(mappedBy= "lista_de_cursos", fetch= FetchType.LAZY)
-	@JsonIgnoreProperties("lista_de_cursos")
-    @Getter @Setter private Set<UsuarioEntidade> lista_aluno= new HashSet<>();
-    
-    
-    public void addAluno(UsuarioEntidade usuario) {
-    	this.lista_aluno.add(usuario);
-    }
+	@OneToMany(mappedBy = "curso")
+	@JsonIgnoreProperties("cursos")
+	@Getter @Setter private Set<MatriculaEntidade> alunos;
 }
