@@ -21,7 +21,7 @@ public class CursoDTO {
 	
 	private float duration;
 	
-	private short rating;
+	private float rating;
     
 	private Date releaseDate;
     

@@ -43,7 +43,7 @@ public class CursoEntidade {
 	@Getter @Setter private float duration;
 	
 	@NotNull(message = "{rating.not.null}")
-	@Getter @Setter private short rating;
+	@Getter @Setter private float rating;
     
 	@NotNull @Temporal(TemporalType.TIMESTAMP)
     @Getter private Date releaseDate= new java.sql.Date(System.currentTimeMillis());
