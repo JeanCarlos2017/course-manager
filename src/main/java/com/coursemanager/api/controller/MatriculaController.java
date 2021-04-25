@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coursemanager.domain.dto.MatriculaDTO;
-import com.coursemanager.domain.dto.UtilsDTO;
+import com.coursemanager.domain.dto.UtilsEntidadeToDTO;
 import com.coursemanager.domain.service.MatriculaService;
 
 @RestController 
@@ -30,7 +30,7 @@ public class MatriculaController {
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<MatriculaDTO>> listaMatricula(){
-		return ResponseEntity.ok( UtilsDTO.matriculaEntidadeToDTO( matriculaService.listaMatricula()) );
+		return ResponseEntity.ok( UtilsEntidadeToDTO.matriculaEntidadeToDTO( matriculaService.listaMatricula()) );
 	}
 	
 	
