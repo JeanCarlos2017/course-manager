@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coursemanager.domain.dto.CursoDTO;
+import com.coursemanager.domain.dto.UsuarioDTO;
 import com.coursemanager.domain.dto.UtilsEntidadeToDTO;
 import com.coursemanager.domain.model.UsuarioEntidade;
 import com.coursemanager.domain.model.UsuarioLogin;
@@ -40,8 +41,8 @@ public class UsuarioController {
 	
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<UsuarioEntidade>> getAll(){
-		return ResponseEntity.ok(usuarioService.listaUsuario());
+	public ResponseEntity<List<UsuarioDTO>> getAll(){
+		return ResponseEntity.ok(UtilsEntidadeToDTO.usuarioEntidadeToDTO(usuarioService.listaUsuario()));
 	}
 	
 	@GetMapping("/buscaPorId/{id}")
