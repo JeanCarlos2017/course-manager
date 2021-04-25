@@ -29,6 +29,7 @@ public class MatriculaService {
 		this.buscaAluno(idAluno);
 		this.buscaCurso(idCurso);
 		this.buildChaveMatricula();
+		this.isMatriculaDuplicada();
 		this.buildMatricula();
 		return this.saveMatricula();
 	}
@@ -78,5 +79,10 @@ public class MatriculaService {
 		else throw new EntidadeNaoEncontradaException("Não existe uma mátricula para esse curso e aluno, por favor verifique e tente novamente!");
 	}
 	
-	
+	private boolean isMatriculaDuplicada() {
+		if(this.matriculaRepositorio.existsById(this.chaveMatriculaEntidade)) {
+			throw new CadastroException("Essa matricula já existe!");
+		}
+		else return false;
+	}
 }
