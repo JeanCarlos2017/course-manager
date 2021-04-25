@@ -46,11 +46,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/buscaPorId/{id}")
-	public ResponseEntity<UsuarioEntidade> findById(@PathVariable long id){
-		return ResponseEntity.ok(usuarioService.getById(id));
+	public ResponseEntity<UsuarioDTO> findById(@PathVariable long id){
+		return ResponseEntity.ok(new UsuarioDTO(usuarioService.getById(id)));
 	}
 	@PostMapping("/cadastrar")
-	public ResponseEntity<UsuarioEntidade> postUsuario(@Valid @RequestBody UsuarioEntidade usuario) throws Exception{
+	public ResponseEntity<UsuarioDTO> postUsuario(@Valid @RequestBody UsuarioEntidade usuario) throws Exception{
 		UsuarioEntidade user = usuarioService.cadastraUsuario(usuario);
 		return this.valida(user, HttpStatus.CREATED);
 	}
@@ -63,7 +63,7 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/atualizar/{id}")
-	public ResponseEntity<UsuarioEntidade> putUsuario(@Valid @RequestBody UsuarioEntidade usuario)
+	public ResponseEntity<UsuarioDTO> putUsuario(@Valid @RequestBody UsuarioEntidade usuario)
 			throws Exception{
 		UsuarioEntidade user = usuarioService.alteraUsuario(usuario);
 		return this.valida(user, HttpStatus.ACCEPTED);
@@ -81,8 +81,8 @@ public class UsuarioController {
 				(this.usuarioService.getCursoAluno(id_usuario)));
 	}
 	
-	private ResponseEntity<UsuarioEntidade> valida(UsuarioEntidade user, HttpStatus status){
+	private ResponseEntity<UsuarioDTO> valida(UsuarioEntidade user, HttpStatus status){
 		if (user == null) return ResponseEntity.badRequest().build();
-		else return ResponseEntity.status(status).body(user);
+		else return ResponseEntity.status(status).body(new UsuarioDTO(user));
 	}
 }
