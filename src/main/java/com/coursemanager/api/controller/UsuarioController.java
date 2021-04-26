@@ -31,11 +31,6 @@ import com.coursemanager.domain.service.UsuarioService;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuarioController {
 
-	@GetMapping
-	public String index() {
-		return "servidor funcionando!";
-	}
-	
 	@Autowired
 	private UsuarioService usuarioService;
 	
