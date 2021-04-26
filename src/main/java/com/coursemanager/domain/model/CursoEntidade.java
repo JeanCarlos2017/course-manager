@@ -16,13 +16,14 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity @Table(name="tb_curso")
-@NoArgsConstructor @ToString
+@NoArgsConstructor @ToString @EqualsAndHashCode
 public class CursoEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter @Setter private long id;

@@ -11,13 +11,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity @Table(name = "tb_usuario")
-@NoArgsConstructor @Getter @Setter @ToString
+@NoArgsConstructor @Getter @Setter @ToString @EqualsAndHashCode
 public class UsuarioEntidade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
