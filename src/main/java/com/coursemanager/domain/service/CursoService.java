@@ -55,4 +55,7 @@ public class CursoService {
 		return curso.getAlunos();
 	}
 	
+	public Collection<CursoEntidade> buscaCursosQueContemCom(String nome){
+		return this.cursoRepositorio.findAllByNomeContainingIgnoreCase(nome);
+	}
 }

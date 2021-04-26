@@ -1,5 +1,6 @@
 package com.coursemanager.api.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -54,6 +55,11 @@ public class CursoController {
 	public ResponseEntity<CursoDTO> alterarCurso(@Valid @RequestBody CursoEntidade curso){
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(
 			  new CursoDTO(	this.cursoService.alteraCurso(curso)) );
+	}
+	
+	@GetMapping("pesquisa-curso-por/{nomeCurso}")
+	public Collection<CursoDTO>  buscaCursosQueContemCom(@PathVariable String nomeCurso){
+		return UtilsEntidadeToDTO.cursoEntidadeToDTO(this.cursoService.buscaCursosQueContemCom(nomeCurso));
 	}
 
 }
